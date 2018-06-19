@@ -15,10 +15,20 @@ body{
 
 .DocumentWidth{
     width: 100% !important;
+    border: none !important;
+}
+
+.DocumentWidth>div{
+    border: none !important;
 }
 
 .DocumentSubWidth{
     width: 100% !important;
+    border: none !important;
+}
+
+.DocumentSubWidth>div{
+    border: none !important;
 }
 /* on both */
 html, body {
@@ -169,11 +179,17 @@ div#Nav ul{
     position: absolute;
     top: 56px;
     width: 100%;
-    background: #fafbfc !important;
+    background: #fff !important;
+
 }
 
 #Widgets{
-    background: #fafbfc !important;
+    background: #fff !important;
+    width: 100% !important;
+}
+
+#DASHBOARD_DISPLAY{
+    position: relative !important;
     width: 60% !important;
     left: 20%!important;
 }
@@ -203,6 +219,10 @@ div[id*='AJAX_header']{
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
 }
 
+#TableActions{
+    display: none !important;
+}
+
 iframe html body{
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
 }
@@ -214,8 +234,8 @@ iframe html body a{
 
 table[id*='tableWIDGET'] tbody tr div iframe{
     border-color: rgb(209, 213, 218) !important;
-    border-width: 1px !important;;
-    border-style: solid !important;;
+    border-width: 1px !important;
+    border-style: solid !important;
     border-radius: 2px;
     padding: 8px;
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
@@ -238,7 +258,7 @@ table[id*='tableWIDGET'] tbody tr td{
 }
 
 div #Main.DocumentSubWidth div{
-    border-style: none !important;
+    /*border-style: none !important;*/
 }
 
 #widgetpanelcontrol a img{
@@ -247,6 +267,9 @@ div #Main.DocumentSubWidth div{
 
 #TableActions{
     background-color: #fff !important;
+    width: 60% !important;
+    left: 20% !important;
+    position: relative !important;
 }
 
 #TableActions table tbody tr td div img{
@@ -283,8 +306,6 @@ div #Main.DocumentSubWidth div{
     position: relative !important;
     margin-top: 20px !important;
     background: #f6f8fa !important;
-    border: 1px solid #e1e4e8 !important;
-    border-radius: 3px 3px 0 0 !important;
     font-size: 16px !important;
     color: #24292e !important;
     font-weight: 400 !important;
@@ -296,16 +317,20 @@ div #Main.DocumentSubWidth div{
     position: relative !important;
     margin-top: 20px !important;
     background: #f6f8fa !important;
-    border-left: none !important;
-    border-right: none !important;
-    font-size: 16px !important;
-    color: #24292e !important;
+    border: none !important;
+    border-bottom:  1px #e1e4e8 solid !important;;
     font-weight: 400 !important;
     line-height: 24px !important;
     padding-bottom: 13px;
+    color: #24292e !important;
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
     font-size: 14px !important;
 
+}
+
+.x-panel-bwrap{
+    border: 1px #e1e4e8 solid !important;
+    border-radius: 3px 3px 0 0;
 }
 
 input[type='checkbox']{
@@ -315,7 +340,6 @@ input[type='checkbox']{
 
 .numara-grid .x-grid3-row td {
     height: 60px !important;
-    color: #24292e !important;
     text-decoration: none !important;
     font-weight: 600 !important;
     background-color: transparent;
@@ -323,11 +347,9 @@ input[type='checkbox']{
     vertical-align: middle !important;
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
     line-height: 20px;
+    color: #586069 !important;
 }
 
-.numara-grid .x-grid3-row{
-    border-bottom: 1px solid rgb(225, 228, 232) !important;
-}
 
 a{
     text-decoration: none !important;
@@ -335,9 +357,23 @@ a{
 }
 
 .numara-grid .x-grid3-row-alt {
-    background-color: #fff !important;;
+    background-color: #fff !important;
 }
 
+.x-grid3-row{
+    border-left: none !important;
+    border-right: none !important;
+    border-top: none !important;
+    border-bottom: 1px #e1e4e8 solid !important;
+}
+
+.x-grid3-row-table{
+    border: none !important;
+}
+
+div[id*='homepageGrid'] td[class*='master_checkbox']{
+    display: none !important;
+}
 
 div[id*='homepageGrid'] td[class*='0attachments']{
     display: none !important;
@@ -345,4 +381,73 @@ div[id*='homepageGrid'] td[class*='0attachments']{
 
 div[id*='homepageGrid'] td[class*='0ticket_type'] img{
     content:url(data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==);
+}
+
+div[id*='homepageGrid'] td[class*='0ticket_type']{
+    display: none !important;
+}
+
+div[id*='homepageGrid'] td[class*='status']{
+    width: 70px !important;
+    color: #586069 !important;
+}
+
+div[id*='homepageGrid'] td[class*='System']{
+    width: 150px !important;
+    color: #586069 !important;
+}
+
+div[id*='homepageGrid'] td[class*='Product']{
+    width: 150px !important;
+    color: #586069 !important;
+}
+
+div[id*='homepageGrid'] td[class*='Title']{
+    color: #24292e !important;
+}
+
+div[id*='homepageGrid']{
+    width: 60% !important;
+    left: 20% !important;
+    position: relative !important;
+
+}
+
+.x-selectable{
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.testIcon, .openIcon, .devIcon, .appIcon, .prodIcon{
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+    margin: 0px 0px 0px 16px;
+    padding: 0 !important;
+    fill: #28a745;
+    top: 0px !important;
+    position: relative !important;
+}
+
+.testIcon{
+    background-image:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMy44Mzk3IDE0LjU5TDEwLjQ1OTcgN1YzSDExLjQ1OTdWMkgyLjQ1OTczVjNIMy40NTk3M1Y3TDAuMDg5NzI1NCAxNC41OUMtMC4yMTAyNzUgMTUuMjUgMC4yNzk3MjUgMTYgMC45OTk3MjUgMTZIMTIuOTM5N0MxMy42NTk3IDE2IDE0LjEzOTcgMTUuMjUgMTMuODQ5NyAxNC41OUgxMy44Mzk3Wk0zLjIwOTczIDEwTDQuNDU5NzMgN1YzSDkuNDU5NzNWN0wxMC43MDk3IDEwSDMuMjA5NzNaTTcuNDU5NzMgOEg4LjQ1OTczVjlINy40NTk3M1Y4Wk02LjQ1OTczIDdINS40NTk3M1Y2SDYuNDU5NzNWN1pNNi40NTk3MyA0SDcuNDU5NzNWNUg2LjQ1OTczVjRaTTYuNDU5NzMgMUg1LjQ1OTczVjBINi40NTk3M1YxWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC41Mzk5OTMpIiBmaWxsPSJibGFjayIvPgo8L3N2Zz4K');
+}
+
+
+
+.openIcon{
+    background-image:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNCAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik03IDEuM0MxMC4xNCAxLjMgMTIuNyAzLjg2IDEyLjcgN0MxMi43IDEwLjE0IDEwLjE0IDEyLjcgNyAxMi43QzMuODYgMTIuNyAxLjMgMTAuMTQgMS4zIDdDMS4zIDMuODYgMy44NiAxLjMgNyAxLjNaTTcgMEMzLjE0IDAgMCAzLjE0IDAgN0MwIDEwLjg2IDMuMTQgMTQgNyAxNEMxMC44NiAxNCAxNCAxMC44NiAxNCA3QzE0IDMuMTQgMTAuODYgMCA3IDBaTTggM0g2VjhIOFYzWk04IDlINlYxMUg4VjlaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDEpIiBmaWxsPSJibGFjayIvPgo8L3N2Zz4K');
+}
+
+.devIcon{
+     background-image:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxMCAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMCA0QzEwIDIuODkgOS4xMSAyIDggMkM2Ljg5IDIgNiAyLjg5IDYgNEM2IDQuNzMgNi40MSA1LjM4IDcgNS43MlY2LjAyQzYuOTggNi41NCA2Ljc3IDcgNi4zNyA3LjRDNS45NyA3LjggNS41MSA4LjAxIDQuOTkgOC4wM0M0LjE2IDguMDUgMy41MSA4LjE5IDIuOTkgOC40OFYzLjcyQzMuNTggMy4zOCAzLjk5IDIuNzQgMy45OSAyQzMuOTkgMC44OSAzLjEgMCAxLjk5IDBDMC44OCAwIDAgMC44OSAwIDJDMCAyLjczIDAuNDEgMy4zOCAxIDMuNzJWMTAuMjhDMC40MSAxMC42MyAwIDExLjI3IDAgMTJDMCAxMy4xMSAwLjg5IDE0IDIgMTRDMy4xMSAxNCA0IDEzLjExIDQgMTJDNCAxMS40NyAzLjggMTEgMy40NyAxMC42NEMzLjU2IDEwLjU4IDMuOTUgMTAuMjMgNC4wNiAxMC4xN0M0LjMxIDEwLjA2IDQuNjIgMTAgNSAxMEM2LjA1IDkuOTUgNi45NSA5LjU1IDcuNzUgOC43NUM4LjU1IDcuOTUgOC45NSA2Ljc3IDkgNS43M0g4Ljk4QzkuNTkgNS4zNyAxMCA0LjczIDEwIDRaTTIgMC44MDAwMDNDMi42NiAwLjgwMDAwMyAzLjIgMS4zNSAzLjIgMkMzLjIgMi42NSAyLjY1IDMuMiAyIDMuMkMxLjM1IDMuMiAwLjgwMDAwMyAyLjY1IDAuODAwMDAzIDJDMC44MDAwMDMgMS4zNSAxLjM1IDAuODAwMDAzIDIgMC44MDAwMDNaTTIgMTMuMjFDMS4zNCAxMy4yMSAwLjgwMDAwMyAxMi42NiAwLjgwMDAwMyAxMi4wMUMwLjgwMDAwMyAxMS4zNiAxLjM1IDEwLjgxIDIgMTAuODFDMi42NSAxMC44MSAzLjIgMTEuMzYgMy4yIDEyLjAxQzMuMiAxMi42NiAyLjY1IDEzLjIxIDIgMTMuMjFaTTggNS4yMUM3LjM0IDUuMjEgNi44IDQuNjYgNi44IDQuMDFDNi44IDMuMzYgNy4zNSAyLjgxIDggMi44MUM4LjY1IDIuODEgOS4yIDMuMzYgOS4yIDQuMDFDOS4yIDQuNjYgOC42NSA1LjIxIDggNS4yMVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMSkiIGZpbGw9ImJsYWNrIi8+Cjwvc3ZnPgo=');
+}
+
+.appIcon{
+    background-image:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik04LjA2IDBDMyAwIDAgNiAwIDZDMCA2IDMgMTIgOC4wNiAxMkMxMyAxMiAxNiA2IDE2IDZDMTYgNiAxMyAwIDguMDYgMFpNOCAxMEM1LjggMTAgNCA4LjIyIDQgNkM0IDMuOCA1LjggMiA4IDJDMTAuMjIgMiAxMiAzLjggMTIgNkMxMiA4LjIyIDEwLjIyIDEwIDggMTBaTTEwIDZDMTAgNy4xMSA5LjExIDggOCA4QzYuODkgOCA2IDcuMTEgNiA2QzYgNC44OSA2Ljg5IDQgOCA0QzkuMTEgNCAxMCA0Ljg5IDEwIDZaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDIpIiBmaWxsPSJibGFjayIvPgo8L3N2Zz4K');
+}
+
+
+.prodIcon{
+    background-image:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik02IDlIOFYxMUg2VjlaTTggM0g2VjhIOFYzWk05LjUgNC41TDguNSA1LjVMMTEgOEwxNSAzLjVMMTQgMi41TDExIDZMOS41IDQuNVpNNyAxMi43QzMuODYgMTIuNyAxLjMgMTAuMTQgMS4zIDdDMS4zIDMuODYgMy44NiAxLjMgNyAxLjNDOC44MyAxLjMgMTAuNDUgMi4xOCAxMS41IDMuNUwxMi40MiAyLjU4QzExLjE0IDEgOS4xOSAwIDcgMEMzLjE0IDAgMCAzLjE0IDAgN0MwIDEwLjg2IDMuMTQgMTQgNyAxNEMxMC44NiAxNCAxNCAxMC44NiAxNCA3TDEyLjQ4IDguNTJDMTEuODIgMTAuOTMgOS42MiAxMi43MSA3IDEyLjcxVjEyLjdaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxIDEpIiBmaWxsPSJibGFjayIvPgo8L3N2Zz4K');
 }
