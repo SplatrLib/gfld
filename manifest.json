@@ -1,0 +1,22 @@
+{
+  "name": "wfld aldon to git",
+  "version": "1.0",
+  "description": "makes aldon look like github",
+  "content_scripts": [
+    {
+      "matches": ["http://aldon01-stp/MRcgi/MRhomepage.pl*"],
+      "all_frames": true,
+      "css": ["gfld.css"],
+      "js": [ "jquery.js", "contentScript.js"]
+    }
+  ],
+  "web_accessible_resources":[
+    "images/*"
+  ],
+  "permissions": [
+    "storage",
+    "declarativeContent",
+    "activeTab"
+  ],
+  "manifest_version": 2
+}
