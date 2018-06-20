@@ -46,7 +46,7 @@ html, body {
 }
 
 .x-grid3-cell-inner{
-    font-size: 13px !important;
+    /*font-size: 13px !important;*/
 }
 
 p[id*='p28links']{
@@ -339,7 +339,7 @@ input[type='checkbox']{
 }
 
 .numara-grid .x-grid3-row td {
-    height: 60px !important;
+    height: 30px !important;
     text-decoration: none !important;
     font-weight: 600 !important;
     background-color: transparent;
@@ -393,17 +393,18 @@ div[id*='homepageGrid'] td[class*='status']{
 }
 
 div[id*='homepageGrid'] td[class*='System']{
-    width: 150px !important;
+    /*width: 350px !important;*/
     color: #586069 !important;
+    font-size: 16px !important;
+    align-self: left;
 }
 
 div[id*='homepageGrid'] td[class*='Product']{
-    width: 150px !important;
-    color: #586069 !important;
+    display: none !important;
 }
 
-div[id*='homepageGrid'] td[class*='Title']{
-    color: #24292e !important;
+div[id*='homepageGrid'] td[class*='title']{
+    display: none !important;
 }
 
 div[id*='homepageGrid']{
@@ -411,6 +412,21 @@ div[id*='homepageGrid']{
     left: 20% !important;
     position: relative !important;
 
+}
+
+.x-grid3-cell-inner{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    padding-right: 0 !important;
+    padding-left: 8px !important;
+}
+
+.x-grid3-col-hpColHeading_title{
+    color: #24292e !important;
+}
+
+.x-grid3-col-hpColHeading_title, .inner_s_class{
+    float: left;
 }
 
 .x-selectable{
@@ -424,9 +440,19 @@ div[id*='homepageGrid']{
     width: 16px;
     margin: 0px 0px 0px 16px;
     padding: 0 !important;
-    fill: #28a745;
     top: 0px !important;
     position: relative !important;
+}
+
+.displayRow2{
+    font-size: 12px !important;
+    color: #586069 !important;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
+}
+
+.displayRow2 td{
+    padding-left: 8px !important;
+
 }
 
 .testIcon{
@@ -450,4 +476,24 @@ div[id*='homepageGrid']{
 
 .prodIcon{
     background-image:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik02IDlIOFYxMUg2VjlaTTggM0g2VjhIOFYzWk05LjUgNC41TDguNSA1LjVMMTEgOEwxNSAzLjVMMTQgMi41TDExIDZMOS41IDQuNVpNNyAxMi43QzMuODYgMTIuNyAxLjMgMTAuMTQgMS4zIDdDMS4zIDMuODYgMy44NiAxLjMgNyAxLjNDOC44MyAxLjMgMTAuNDUgMi4xOCAxMS41IDMuNUwxMi40MiAyLjU4QzExLjE0IDEgOS4xOSAwIDcgMEMzLjE0IDAgMCAzLjE0IDAgN0MwIDEwLjg2IDMuMTQgMTQgNyAxNEMxMC44NiAxNCAxNCAxMC44NiAxNCA3TDEyLjQ4IDguNTJDMTEuODIgMTAuOTMgOS42MiAxMi43MSA3IDEyLjcxVjEyLjdaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxIDEpIiBmaWxsPSJibGFjayIvPgo8L3N2Zz4K');
+}
+
+.headerInfoBar{
+    color: #586069;
+    font-size: 14px;
+    line-height: 21px !important;
+
+}
+
+.iconInfo{
+    float: left;
+    margin-top: 13px !important;
+    height: 21px !important;
+    padding-left: 8px;
+}
+
+.headerIcon{
+    float: left;
+    margin-top: 16px !important;
+    height: 21px !important;
 }
