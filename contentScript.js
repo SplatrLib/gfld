@@ -11,7 +11,7 @@ $(function(){
     header.style.width = "100%";
     header.style.backgroundColor =  "rgb(36, 41, 46) !important;";
 
-    var head_row = $("#homepageGrid-LXZHUKOV-28 table[class='x-grid3-header'] tbody tr");
+    var head_row = $("div[id*='homepageGrid'] table[class='x-grid3-header'] tbody tr");
     console.log("rows found:" + head_row.length);
 
 
@@ -22,7 +22,7 @@ $(function(){
     var num_prod = 0;
 
 
-    var main_rows = $("#homepageGrid-LXZHUKOV-28 table[class='x-grid3-row-table'] tbody tr").each(function(){
+    var main_rows = $("div[id*='homepageGrid'] table[class='x-grid3-row-table'] tbody tr").each(function(){
         var cols = $('td', $(this));
         console.log(cols.length);
         var col_id = $('.x-grid3-td-hpColHeading_0id', $(this));
@@ -114,7 +114,7 @@ $(function(){
     console.log("num_open: " + num_open);
     console.log("num_dev: " + num_dev);
 
-    var head = $("#homepageGrid-LXZHUKOV-28 div[class='x-grid3-header'] tr").empty();
+    var head = $("div[id*='homepageGrid'] div[class='x-grid3-header'] tr").empty();
 
     head.append($('<div>', {class: 'headerInfoBar'})
         .append($('<div>', {class:'appIcon headerIcon'}))
