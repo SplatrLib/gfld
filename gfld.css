@@ -91,6 +91,7 @@ p[id*='p28links']{
     border: none;
     width: 272px !important;
     color: rgba(255,255,255,0.75) !important;
+    padding-left: 8px;
 }
 
 #splitbutton1{
