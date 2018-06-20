@@ -20,6 +20,7 @@ $(function(){
     var num_dev = 0;
     var num_appro = 0;
     var num_prod = 0;
+    var num_rev = 0;
 
 
     var main_rows = $("div[id*='homepageGrid'] table[class='x-grid3-row-table'] tbody tr").each(function(){
@@ -47,6 +48,7 @@ $(function(){
             num_dev += $(':contains("Development")', col_status).empty().addClass("devIcon").length;
             num_appro += $(':contains("Approvals")', col_status).empty().addClass("appIcon").length;
             num_prod += $(':contains("Scheduled for Prod")', col_status).empty().addClass("prodIcon").length;
+            num_rev += $(':contains("Code Review")', col_status).empty().addClass("reviewIcon").length;
         }
 
         //concat system and product into one value
@@ -96,12 +98,21 @@ $(function(){
                 }
             }
 
-            var _string2 = '#' + inner_n_text + ' opened by ' + inner_d_text;
+            var _string2 = '#' + inner_n_text + ' opened by ' + inner_d_text + '  ';
+            var _ticket = $('<div>', {class:"noFmt"}).append(_string2);
+
+            var _td = $('<td>');
+            _td.append(_ticket);
+
             if(inner_m_text !== undefined && inner_m_text.indexOf("Ticket") >= 0){
-                _string2 =  _string2 + ' [ ' + inner_m_text + ' ] ';
+                var master_ticket = inner_m_text.match(/\d+/);
+                var masterTicketLink = $('<div>', {class:"noFmt padLeft", onClick:"goToDetails("+master_ticket+", 28);", style:"cursor: pointer;"});
+                var link_string =  ' [ ' + inner_m_text + ' ] ';
+                masterTicketLink.append(link_string);
+                _td.append(masterTicketLink);
             }
 
-            row2.append($('<td>').append(_string2));
+            row2.append(_td);
         }
 
         row2.insertAfter($(this));
