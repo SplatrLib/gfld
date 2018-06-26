@@ -190,7 +190,6 @@ $(function(){
 
 
     function dataCard(row, headerMap, id){
-        var sidSTring = id+'card';
         var card = $('<div>', {id: (id+'card'), class:'tooltip_templates'});
         var innercard = $('<div>', {class:"innerCard"});
         var others = $('td:not(.req_fp,.req_rm)', row).map(function(){
