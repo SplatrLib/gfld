@@ -1,17 +1,18 @@
 $(function(){
-    console.log("das gfld");
+    //font
     var elem = document.getElementById("grid-ct");
     elem.style.fontFamily= '"Open Sans",Arial,"Lucida Grande",sans-serif !important';
-    //elem.style.fontSize= '16px !important';
 
+    //clear the inner text of the search box
     var searchBtn = document.getElementById("splitbutton1-button");
     searchBtn.innerText = "";
 
+    //background color of the Header
     var header = document.getElementById("Header");
     header.style.width = "100%";
     header.style.backgroundColor =  "rgb(36, 41, 46) !important;";
 
-
+    //create a map out of the header row (index, innerText)
     var head_row = $("div[id*='homepageGrid'] div[class='x-grid3-header'] tr");
     var headerMap = $("td div", head_row).map(function() {
         return this.innerText;
@@ -19,9 +20,7 @@ $(function(){
 
     console.log(headerMap);
 
-
-
-
+    //ticket type counters
     var num_open = 0;
     var num_test = 0;
     var num_dev = 0;
@@ -29,10 +28,9 @@ $(function(){
     var num_prod = 0;
     var num_rev = 0;
 
-
+    //handle the rows
     var main_rows = $("div[id*='homepageGrid'] table[class='x-grid3-row-table'] tbody tr").each(function(){
         var cols = $('td', $(this));
-        //console.log(cols.length);
         var col_id = $('.x-grid3-td-hpColHeading_0id', $(this));
         var col_checkbox = $('.x-grid3-td-hpColHeading_0master_checkbox', $(this));
         var col_attachments = $('.x-grid3-td-hpColHeading_0attachments', $(this));
@@ -46,6 +44,7 @@ $(function(){
         var col_devStatus = $('.x-grid3-td-hpColHeading_Dev__bStatus', $(this));
         var TICKET_NUMBER = Math.floor(Math.random()*90000) + 10000;;
 
+        //flag the id, checkbox, and attachments columns to be removed
         col_id.addClass("req_rm");
         col_checkbox.addClass("req_rm");
         col_attachments.addClass("req_rm");
@@ -59,15 +58,17 @@ $(function(){
             num_prod += $(':contains("Scheduled for Prod")', col_status).empty().addClass("prodIcon").length;
             num_rev += $(':contains("Code Review")', col_status).empty().addClass("reviewIcon").length;
 
+            //keep the status column
             col_status.addClass("req_fp");
         }
 
         //task: add something for development status - development
         if(col_devStatus !== undefined){
            if($(':contains("Development")', col_devStatus).length === 1){
-                //console.log("DEV STATUS DEVELOPMENT");
             }
+            //col_devStatus.addClass("req_rm");
         }
+
 
         //concat system and product into one value
         if(col_system !== undefined && col_product !== undefined){
@@ -89,18 +90,18 @@ $(function(){
                 var inner_t = $('div', col_title);
                 inner_s.append(inner_t);
             }
-
-            col_system.addClass("req_fp");
         }
 
-
+        //flag the system, product, and title columns to be removed
+        col_system.addClass("req_fp");
         col_product.addClass("req_rm");
         col_title.addClass("req_rm");
-        //col_devStatus.addClass("req_rm");
 
+        //create the 2nd row
         var row2 = $('<tr>', {class: "displayRow2"});
         row2.append($('<td>'), {class:"req_fp"});
 
+        //ticket number, department, master ticket info
         if(col_ticketNumber !== undefined){
             var inner_n = $('div', col_ticketNumber);
             var inner_d = $('div', col_dept);
@@ -115,12 +116,12 @@ $(function(){
             //replace master ticket icon with name
             if(col_master !== undefined){
                 var _name = $('div img',$(this)).attr("title");
-                console.log(_name);
                 if( _name !== undefined ){
                     inner_m_text = _name.replace('\xa0', "");
                 }
             }
 
+            //master ticket link
             var _string2 = '#' + inner_n_text + ' opened by ' + inner_d_text + '  ';
             var _ticket = $('<div>', {class:"noFmt"}).append(_string2);
 
@@ -138,37 +139,34 @@ $(function(){
             row2.append(_td);
         }
 
-        row2.insertAfter($(this));
-
         col_ticketNumber.addClass("req_rm");
         col_dept.addClass("req_rm");
         col_master.addClass("req_rm");
 
+        //insert the new row after the current row, in the same table
+        row2.insertAfter($(this));
+
+        //create tooltips out of any remaining colums that have
+        //not been flagged to keep (.req_fp) or remove (.req_rm)
         var resCard = dataCard($(this), headerMap, TICKET_NUMBER);
 
         $(this).find('.req_rm').remove();
 
-
         col_status.addClass('tipped');
-       // col_status.attr('ext:qtip', '');
 
         col_status.tooltipster({
                 content: resCard,
                 animation: 'fade',
                 delay: 200,
-                theme: 'tooltipster-light'
+                theme: 'tooltipster-light',
+                position: 'left'
         });
-
-
-
     });
 
-
-    console.log("num_open: " + num_open);
-    console.log("num_dev: " + num_dev);
-
+    //empty the head row
     head_row.empty();
 
+    //ticket summary header lables
     head_row.append($('<div>', {class: 'headerInfoBar'})
         .append($('<div>', {class:'appIcon headerIcon'}))
         .append($('<div>', {class:'iconInfo'})
@@ -193,7 +191,6 @@ $(function(){
 
     function dataCard(row, headerMap, id){
         var sidSTring = id+'card';
-        //console.log(sidSTring);
         var card = $('<div>', {id: (id+'card'), class:'tooltip_templates'});
         var innercard = $('<div>', {class:"innerCard"});
         var others = $('td:not(.req_fp,.req_rm)', row).map(function(){
@@ -202,7 +199,6 @@ $(function(){
             var _text = _div.text();
             var _name = headerMap[this.cellIndex];
             var result =  _name + ": " + _text;
-            //console.log(result);
             innercard.append(inner.append(result));
         });
 
