@@ -67,30 +67,22 @@
 			if ($title.exists()) {
 				const $ticketNumberContent = $ticketNumber.removeAttr('style').children('div:first');
 				const ticketNumber = $ticketNumberContent.text();
-				$ticketNumberContent.empty().removeAttr('style').append($('<div/>', { 'class': 'inner_s_class' }).append(`#${ticketNumber}`)).append($title.children('div:first'));
+				let $titleElements = $title.children('div:first');
+				let $titleText = $titleElements.children('a[href="#"][onclick]');
+				$titleText.replaceWith($('<div/>').append($titleText.text()));
+				$ticketNumberContent.empty().removeAttr('style').append($('<div/>', { 'class': 'inner_s_class' }).append(`#${ticketNumber}`)).append($('<div/>').append($titleElements));
+				$title.remove();
 			}
-
-			$title.remove();
 
 			const $additionalDetailsRow = $('<tr>', {'class': 'displayRow2'});
 			$additionalDetailsRow.append($('<td>'));
 
 			const $system = $elem.find('.x-grid3-td-hpColHeading_System');
 			const $product = $elem.find('.x-grid3-td-hpColHeading_Product');
-			const $ticketType = $elem.find('.x-grid3-td-hpColHeading_0ticket_type');
 			const $department = $elem.find('.x-grid3-td-hpColHeading_Dept');
 			if ($system.exists()) {
 				const system = $system.children('div:first').text();
 				const department = $department.children('div:first').text();
-				let ticketType = $ticketType.children('div:first').text();
-
-				// Replace master ticket icon with name
-				if ($ticketType.exists()) {
-					const projectTitle = $('div img', $elem).attr('title');
-					if (projectTitle !== undefined) {
-						ticketType = projectTitle.replace('\xa0', '');
-					}
-				}
 
 				const systemAndProduct = `${system.replace('(WrightFlood / Portal)', '').replace('(AS/400)', '').trim()} | ${$product.children('div:first').text()}`;
 
@@ -99,10 +91,17 @@
 				$td.append($('<div/>', {'class': 'noFmt padLeft'}).append(`Opened by ${department}`));
 				$td.append($('<div/>', {'class': 'noFmt padLeft'}).append(`[ Last Edited On: ${lastEditedOn} ]`));
 
-				if (ticketType !== undefined && ticketType.indexOf('Ticket') >= 0) {
-					const $masterTicketLink = $('<div/>', { 'class': 'noFmt padLeft', onClick: `goToDetails(${ticketType.match(/\d+/)}, 28);`, style: 'cursor: pointer;' });
-					$masterTicketLink.append(`[ ${ticketType} ]`);
-					$td.append($masterTicketLink);
+				// Replace master ticket icon with name
+				const $ticketType = $elem.find('.x-grid3-td-hpColHeading_0ticket_type');
+				const $ticketTypeImage = $ticketType.find('img[title]');
+				if ($ticketTypeImage.exists()) {
+					const ticketType = $ticketTypeImage.attr('title').replace('\xa0', '');
+
+					if (ticketType && ticketType.includes('Ticket')) {
+						$td.append($('<a/>', { 'class': 'noFmt padLeft', href: `javascript:goToDetails(${ticketType.match(/\d+/)}, 28);` }).append(`[ ${ticketType} ]`));
+					}
+
+					$ticketType.remove();
 				}
 
 				$additionalDetailsRow.append($td);
@@ -114,12 +113,14 @@
 			$system.remove();
 			$product.remove();
 			$department.remove();
-			$ticketType.remove();
 		});
 
 		const headerInfo = [{
 			iconClass: 'devIcon',
 			text: `${devTickets} Development`
+		}, {
+			iconClass: 'reviewIcon',
+			text: `${codeReviewTickets} Code Review`
 		}, {
 			iconClass: 'testIcon',
 			text: `${testingTickets} Testing`
