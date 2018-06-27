@@ -57,17 +57,18 @@ $(function(){
             num_appro += $(':contains("Approvals")', col_status).empty().addClass("appIcon").length;
             num_prod += $(':contains("Scheduled for Prod")', col_status).empty().addClass("prodIcon").length;
             num_rev += $(':contains("Code Review")', col_status).empty().addClass("reviewIcon").length;
-
-            //keep the status column
-            col_status.addClass("req_fp");
         }
 
         //task: add something for development status - development
         if(col_devStatus !== undefined){
            if($(':contains("Development")', col_devStatus).length === 1){
-            }
+               // col_status.empty().addClass("codeIcon, req_fp");
+           }
             //col_devStatus.addClass("req_rm");
         }
+
+        //keep the status column
+        col_status.addClass("req_fp");
 
 
         //concat system and product into one value

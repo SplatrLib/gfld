@@ -485,7 +485,7 @@ div[id*='homepageGrid']{
 }
 
 .codeIcon{
-    background-image: url("data:image/svg+xml,%3Csvg width='14' height='16' viewBox='0 0 14 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M9.5 0L8 1.5L11.5 5L8 8.5L9.5 10L14 5L9.5 0ZM4.5 0L0 5L4.5 10L6 8.5L2.5 5L6 1.5L4.5 0Z' transform='translate%280 3%29' fill='black'/%3E%3C/svg%3E%0A");
+    background-image:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNCAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik05LjUgMEw4IDEuNUwxMS41IDVMOCA4LjVMOS41IDEwTDE0IDVMOS41IDBaTTQuNSAwTDAgNUw0LjUgMTBMNiA4LjVMMi41IDVMNiAxLjVMNC41IDBaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDMpIiBmaWxsPSJibGFjayIvPgo8L3N2Zz4K');
 }
 
 .headerInfoBar{

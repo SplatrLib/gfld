@@ -1,0 +1,9 @@
+{
+  "name": "gfld",
+  "version": "1.0.0",
+  "description": "Makes community manager look like github",
+  "devDependencies": {
+    "grunt": "^1.0.3",
+    "grunt-sass": "^2.1.0"
+  }
+}
