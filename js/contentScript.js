@@ -80,8 +80,8 @@
             const $additionalDetailsRow = $('<tr>', {'class': 'displayRow2'});
             $additionalDetailsRow.append($('<td>'));
 
-            let TICKET_NUMBER = Math.floor(Math.random()*90000) + 10000;;
-
+            //id we will use with the tooltip
+            let cardId = Math.floor(Math.random()*90000) + 10000;
 
             const $ticketNumber = $elem.find('.x-grid3-td-hpColHeading_mr');
             const $title = $elem.find('.x-grid3-td-hpColHeading_title');
@@ -91,23 +91,26 @@
 			if ($system.exists()) {
                 const system = $system.children('div:first').text();
                 const product = $product.children('div:first').text();
-                const systemAndProduct = `${system.replace('(WrightFlood / Portal)', '').replace('(AS/400)', '').trim()} | ${product}`
+                const systemAndProduct = `${system.replace('(WrightFlood / Portal)', '').replace('(AS/400)', '').trim()} | ${product}`;
+
+                const department = $department.children('div:first').text();
+                const $ticketNumberContent = $ticketNumber.removeAttr('style').children('div:first');
+                const ticketNumber = $ticketNumberContent.text();
+                cardId = ticketNumber;
+
                 let $titleElements = $title.children('div:first');
-
                 let $titleText = $titleElements.children('a[href="#"][onclick]');
-                $titleText.replaceWith($('<div/>').append($titleText.text()));
+                $titleText.replaceWith($('<div/>', {class:'ticketLink', onClick:`goToDetails(${ticketNumber.match(/\d+/)},28);`})
+					.append($titleText.text()));
 
-                $system.empty().removeAttr('style').append($('<div/>',{class:'inner_s_class'}).append(systemAndProduct));
+                $system.empty().removeAttr('style').append($('<div/>',{class:'inner_s_class'}).append('#'+ticketNumber));
                 $system.append($titleElements);
 
 
                 const $td = $('<td/>');
-                const department = $department.children('div:first').text();
-                const $ticketNumberContent = $ticketNumber.removeAttr('style').children('div:first');
-                const ticketNumber = $ticketNumberContent.text();
-                TICKET_NUMBER = ticketNumber;
 
-				$td.append($('<div/>', {'class': 'noFmt'}).append('#'+ticketNumber));
+
+				$td.append($('<div/>', {'class': 'noFmt'}).append(systemAndProduct));
 				$td.append($('<div/>', {'class': 'noFmt padLeft'}).append(`Opened by ${department}`));
 				//$td.append($('<div/>', {'class': 'noFmt padLeft'}).append(`[ Last Edited On: ${lastEditedOn} ]`));
 
@@ -117,12 +120,10 @@
 				if ($ticketTypeImage.exists()) {
 					const ticketType = $ticketTypeImage.attr('title').replace('\xa0', '');
 					if (ticketType && ticketType.includes('Ticket')) {
-					    console.log('adding tt');
-						$td.append($('<a/>', { 'class': 'noFmt padLeft', href: `javascript:goToDetails(${ticketType.match(/\d+/)}, 28);` }).append(`[ ${ticketType} ]`));
+						$td.append($('<a/>', { 'class': 'noFmt padLeft inline-ticket-link', href: `javascript:goToDetails(${ticketType.match(/\d+/)}, 28);` })
+							.append(`[ ${ticketType} ]`));
 					}
-
-
-					$ticketType.remove();
+					$ticketType.addClass("req_rm");
 				}
 
 				$additionalDetailsRow.append($td);
@@ -136,15 +137,11 @@
 			$product.addClass("req_rm");
 			$department.addClass("req_rm");
 
-
             //create tooltips out of any remaining colums that have
             //not been flagged to keep (.req_fp) or remove (.req_rm)
-            var resCard = dataCard($elem, headerMap, TICKET_NUMBER);
-
-            $elem.find('.req_rm').remove();
+            let resCard = dataCard($elem, headerMap, cardId);
 
             $status.addClass('tipped');
-
             $status.tooltipster({
                 content: resCard,
                 animation: 'fade',
@@ -152,6 +149,9 @@
                 theme: 'tooltipster-light',
                 position: 'left'
             });
+
+            //remove all flagged colums
+            $elem.find('.req_rm').remove();
 		});
 
 		const headerInfo = [{
