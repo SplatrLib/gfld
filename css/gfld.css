@@ -453,7 +453,7 @@ div[id*='homepageGrid']{
 }
 
 .displayRow2 td{
-    padding-left: 8px !important;
+    /*padding-left: 8px !important; */
 
 }
 
