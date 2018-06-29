@@ -25,13 +25,22 @@
 	});
 
 	$(() => {
+        //clear the inner text of the search box
 		document.getElementById('splitbutton1-button').innerText = '';
 		document.getElementById('grid-ct').style.fontFamily = '"Open Sans", Arial, "Lucida Grande", sans-serif !important';
 
+        //background color of the Header
 		const header = document.getElementById('Header');
 		header.style.width = '100%';
 		header.style.backgroundColor = 'rgb(36, 41, 46) !important;';
 
+        //create a map out of the header row (index, innerText)
+        const head_row = $("div[id*='homepageGrid'] div[class='x-grid3-header'] tr");
+        const headerMap = $("td div", head_row).map(function() {
+            return this.innerText;
+        }).get();
+
+        //ticket type counters
 		let openTickets = 0;
 		let testingTickets = 0;
 		let devTickets = 0;
@@ -39,15 +48,19 @@
 		let productionTickets = 0;
 		let codeReviewTickets = 0;
 
+        //handle the rows
 		const $homePage = $('div[id*="homepageGrid"]');
 		$homePage.find('table[class="x-grid3-row-table"] tbody tr').each$((index, $elem) => {
-			$elem.find('.x-grid3-td-hpColHeading_0id').remove();
-			$elem.find('.x-grid3-td-hpColHeading_0master_checkbox').remove();
-			$elem.find('.x-grid3-td-hpColHeading_0attachments').remove();
 
+		    //flag the id, checkbox, and attachments columns to be removed
+			$elem.find('.x-grid3-td-hpColHeading_0id').addClass("req_rm");
+			$elem.find('.x-grid3-td-hpColHeading_0master_checkbox').addClass("req_rm");
+			$elem.find('.x-grid3-td-hpColHeading_0attachments').addClass("req_rm");
+
+			//grab the last edited value
 			let $lastEditedOn = $elem.find('.x-grid3-td-hpColHeading_date');
 			const lastEditedOn = $lastEditedOn.children('div:first').text();
-			$lastEditedOn.remove();
+			$lastEditedOn.addClass("req_rm");
 
 			//set the status icons
 			const $status = $elem.find('.x-grid3-td-hpColHeading_status');
@@ -60,6 +73,8 @@
 				productionTickets += $status.find(':contains("Scheduled for Prod")').empty().addClass('prodIcon').length;
 				codeReviewTickets += $status.find(':contains("Code Review")').empty().addClass('reviewIcon').length;
 			}
+            //keep the status column
+			$status.addClass("req_fp");
 
 			// Concat system and product into one value
 			const $ticketNumber = $elem.find('.x-grid3-td-hpColHeading_mr');
@@ -71,9 +86,12 @@
 				let $titleText = $titleElements.children('a[href="#"][onclick]');
 				$titleText.replaceWith($('<div/>').append($titleText.text()));
 				$ticketNumberContent.empty().removeAttr('style').append($('<div/>', { 'class': 'inner_s_class' }).append(`#${ticketNumber}`)).append($('<div/>').append($titleElements));
-				$title.remove();
+
+                //flag the title column to be removed
+				$title.addClass("req_rm");
 			}
 
+            //create the 2nd row
 			const $additionalDetailsRow = $('<tr>', {'class': 'displayRow2'});
 			$additionalDetailsRow.append($('<td>'));
 
