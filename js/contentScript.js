@@ -178,7 +178,9 @@
 		const $headerIcon = $('<div/>', { 'class': 'headerIcon' });
 		const $iconText = $('<div/>', { 'class': 'iconInfo' });
 		const $header = $homePage.find('div[class="x-grid3-header"] tr').empty();
-		headerInfo.forEach((header) => $header.append($headerInfoBar.clone()).append($headerIcon.clone().addClass(header.iconClass)).append($iconText.clone().append(header.text)));
+		headerInfo.forEach((header) => $header.append($headerInfoBar.clone())
+											  .append($headerIcon.clone().addClass(header.iconClass))
+										      .append($iconText.clone().append(header.text)));
 	});
 
     function dataCard(row, headerMap, id){
@@ -196,4 +198,9 @@
         card.append(innercard);
         return card;
     }
+
+    function toggleStatus(status){
+
+	}
+
 })(jQuery);
