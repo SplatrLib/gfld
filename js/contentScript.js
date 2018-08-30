@@ -69,9 +69,9 @@
 				openTickets += $status.find(':contains("Open")').empty().addClass('openIcon').length;
 				testingTickets += $status.find(':contains("Testing")').empty().addClass('testIcon').length;
 				devTickets += $status.find(':contains("Development")').empty().addClass('devIcon').length;
-				approvedTickets += $status.find(':contains("Approvals")').empty().addClass('integrateIcon').length;
+				approvedTickets += $status.find(':contains("Approvals")').empty().addClass('appIcon').length;
 				productionTickets += $status.find(':contains("Scheduled for Prod")').empty().addClass('prodIcon').length;
-				codeReviewTickets += $status.find(':contains("Code Review")').empty().addClass('reviewIcon').length;
+				codeReviewTickets += $status.find(':contains("Code Review")').empty().addClass('appIcon').length;
 			}
             //keep the status column
 			$status.addClass("req_fp");
@@ -164,7 +164,7 @@
 			iconClass: 'testIcon',
 			text: `${testingTickets} Testing`
 		}, {
-			iconClass: 'integrateIcon',
+			iconClass: 'appIcon',
 			text: `${approvedTickets} Approvals`
 		}, {
 			iconClass: 'prodIcon',
