@@ -2,3 +2,7 @@
 *.un~
 /.idea/
 .idea/
+js/local_issues.js
+js/local_issues.js.map
+node_modules/
+package-lock.json
