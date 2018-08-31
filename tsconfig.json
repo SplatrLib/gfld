@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "outDir": "js/",
+    "sourceMap": true
+  },
+  "files": [
+    "modules/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
+}

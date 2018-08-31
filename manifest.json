@@ -7,12 +7,12 @@
       "matches": ["http://aldon01-stp/MRcgi/MRhomepage.pl*"],
       "all_frames": true,
       "run_at": "document_end",
-      "css": ["css/gfld.css", "css/tooltipster.bundle.min.css","css/tooltipster-sideTip-light.min.css"],
-      "js": [ "js/jquery.js", "js/tooltipster.bundle.min.js","js/contentScript.js"]
+      "css": ["css/gfld.css", "css/local_issues.css", "css/tooltipster.bundle.min.css","css/tooltipster-sideTip-light.min.css", "css/tooltipster-shadow.css"],
+      "js": [ "js/jquery.js", "js/svn_injector.js", "js/tooltipster.bundle.min.js","js/contentScript.js", "js/local_issues.js"]
     }
   ],
   "web_accessible_resources":[
-    "images/*"
+    "svg/*"
   ],
   "permissions": [
     "storage",
