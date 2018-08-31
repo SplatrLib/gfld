@@ -7,6 +7,7 @@
     --grid-header-bg: #f6f8fa;
     --gray-search: #979A9C;
 
+
     --main-font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
 
     --header-font-size: 14px;
@@ -23,9 +24,11 @@
     --widget-tile-border: solid;
 
     --indent-details: none;
+
     --indent-list: 8px;
 
     --extension-id: '__MSG_@@extension_id__'
+
 }
 
 * {
@@ -472,6 +475,53 @@ div[id*='homepageGrid']{
     color: var(--blackish) !important;
 }
 
+.inline-ticket-link{
+    font-weight: bold !important;
+}
+
+.inline-ticket-link:hover{
+    color: var(--blackish) !important;
+}
+
+a{
+    color: var(--link-color) !important;
+}
+
+.x-selectable{
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.testIcon, .openIcon, .devIcon, .appIcon, .prodIcon, .reviewIcon, .integrateIcon .eyeIcon {
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+    margin: 0 0 0 16px;
+    padding: 0 !important;
+    top: 0 !important;
+    position: relative !important;
+}
+
+.displayRow2{
+    font-size: var(--details-font-size) !important;
+    color: var(--font-light) !important;
+    font-family: var(--main-font-family);
+}
+
+.displayRow2 td{
+    padding-left: var(--indent-details) !important;
+}
+
+.ticketLink{
+    cursor: pointer;
+    font-size: var(--title-font-size) !important;
+    font-weight: 600;
+}
+
+.ticketLink:hover{
+    color: var(--link-color);
+}
+
 a{
     color: var(--link-color) !important;
 }
@@ -499,7 +549,7 @@ div[class*="ticket-group"]{
 
 .displayRow2 td{
     padding-left: var(--indent-details) !important;
-}
+
 
 .ticketLink{
     cursor: pointer;
