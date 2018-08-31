@@ -23,6 +23,7 @@
     --widget-tile-border: solid;
 
     --indent-details: none;
+    --indent-list: 8px;
 
     --extension-id: '__MSG_@@extension_id__'
 }
@@ -480,7 +481,7 @@ a{
     padding: 0 !important;
 }
 
-.testIcon, .openIcon, .devIcon, .appIcon, .prodIcon, .reviewIcon, .codeIcon{
+div[class*="ticket-group"]{
     background-repeat: no-repeat;
     min-height: 16px;
     min-width: 16px;
@@ -508,36 +509,6 @@ a{
 
 .ticketLink:hover{
     color: var(--link-color);
-}
-
-.testIcon{
-    background-image: url('chrome-extension://mkbophelbcccfnchjaoinjofcgfbpebj/svg/beaker.svg');
-}
-
-.openIcon{
-    background-image: url('chrome-extension://mkbophelbcccfnchjaoinjofcgfbpebj/svg/issue-opened.svg');
-}
-
-.devIcon{
-    background-image: url('chrome-extension://mkbophelbcccfnchjaoinjofcgfbpebj/svg/git-branch.svg');
-}
-
-.appIcon{
-    background-image: url('chrome-extension://mkbophelbcccfnchjaoinjofcgfbpebj/svg/eye.svg');
-}
-
-
-.prodIcon{
-    background-image: url('chrome-extension://mkbophelbcccfnchjaoinjofcgfbpebj/svg/issue-closed.svg');
-}
-
-.reviewIcon {
-    background-image: url('chrome-extension://mkbophelbcccfnchjaoinjofcgfbpebj/svg/git-compare.svg');
-}
-
-
-.codeIcon{
-    background-image: url('chrome-extension://mkbophelbcccfnchjaoinjofcgfbpebj/svg/code.svg');
 }
 
 .headerInfoBar{
@@ -573,4 +544,6 @@ a{
     width:200px;
 }
 
-
+.show-tg{
+    fill: var(--link-color);
+}

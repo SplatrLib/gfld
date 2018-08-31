@@ -48,6 +48,8 @@
 		let productionTickets = 0;
 		let codeReviewTickets = 0;
 
+		let shownGroups = 0;
+
         //handle the rows
 		const $homePage = $('div[id*="homepageGrid"]');
 		$homePage.find('table[class="x-grid3-row-table"] tbody tr').each$((index, $elem) => {
@@ -66,13 +68,26 @@
 			const $status = $elem.find('.x-grid3-td-hpColHeading_status');
 			if ($status.exists()) {
 				$status.prependTo($elem);
-				openTickets += $status.find(':contains("Open")').empty().addClass('openIcon').length;
-				testingTickets += $status.find(':contains("Testing")').empty().addClass('testIcon').length;
-				devTickets += $status.find(':contains("Development")').empty().addClass('devIcon').length;
-				approvedTickets += $status.find(':contains("Approvals")').empty().addClass('appIcon').length;
-				productionTickets += $status.find(':contains("Scheduled for Prod")').empty().addClass('prodIcon').length;
-				codeReviewTickets += $status.find(':contains("Code Review")').empty().addClass('appIcon').length;
+				openTickets += $status.find(':contains("Open")').empty().addStatusIcon('ticket-group-openIcon').length;
+				testingTickets += $status.find(':contains("Testing")').empty().addClass('ticket-group-testIcon').append($('<img>', {'class':'svg','src': chrome.extension.getURL('svg/beaker.svg')})).length;
+				devTickets += $status.find(':contains("Development")').empty().addClass('ticket-group-devIcon').append($('<img>', {'class':'svg','src': chrome.extension.getURL('svg/git-branch.svg')})).length;
+				approvedTickets += $status.find(':contains("Approvals")').empty().addClass('ticket-group-appIcon').append($('<img>', {'class':'svg','src': chrome.extension.getURL('svg/eye.svg')})).length;
+				productionTickets += $status.find(':contains("Scheduled for Prod")').empty().addClass('ticket-group-prodIcon').append($('<img>', {'class':'svg','src': chrome.extension.getURL('svg/issue-closed.svg')})).length;
+				codeReviewTickets += $status.find(':contains("Code Review")').empty().addClass('ticket-group-codeIcon').append($('<img>', {'class':'svg','src': chrome.extension.getURL('svg/code.svg')})).length;
 			}
+
+			let class_i = $elem.find('[class*=ticket-group]')[0];
+
+			let group_name = "";
+			for(let v_class of class_i.classList.values()){
+				if(v_class.toString().includes('ticket-group')){
+					group_name = v_class;
+				}
+			}
+
+			//add the status as an attribute to the parent row
+			$elem.closest('.x-grid3-row').attr('status-group', group_name);
+
             //keep the status column
 			$status.addClass("req_fp");
 
@@ -155,32 +170,42 @@
 		});
 
 		const headerInfo = [{
-			iconClass: 'devIcon',
+			iconClass: 'ticket-group-devIcon',
 			text: `${devTickets} Development`
 		}, {
-			iconClass: 'reviewIcon',
+			iconClass: 'ticket-group-codeIcon',
 			text: `${codeReviewTickets} Code Review`
 		}, {
-			iconClass: 'testIcon',
+			iconClass: 'ticket-group-testIcon',
 			text: `${testingTickets} Testing`
 		}, {
-			iconClass: 'appIcon',
+			iconClass: 'ticket-group-appIcon',
 			text: `${approvedTickets} Approvals`
 		}, {
-			iconClass: 'prodIcon',
+			iconClass: 'ticket-group-prodIcon',
 			text: `${productionTickets} Scheduled for Production`
 		}, {
-			iconClass: 'openIcon',
+			iconClass: 'ticket-group-openIcon',
 			text: `${openTickets} Open`
 		}];
 
+		const $headerGroup = $('<div/>', {'class': 'headerItemContainer'});
 		const $headerInfoBar = $('<div/>', { 'class': 'headerInfoBar' });
 		const $headerIcon = $('<div/>', { 'class': 'headerIcon' });
 		const $iconText = $('<div/>', { 'class': 'iconInfo' });
 		const $header = $homePage.find('div[class="x-grid3-header"] tr').empty();
-		headerInfo.forEach((header) => $header.append($headerInfoBar.clone())
-											  .append($headerIcon.clone().addClass(header.iconClass))
-										      .append($iconText.clone().append(header.text)));
+		headerInfo.forEach((header) => $header.append($headerGroup.clone().on('click', function(){
+		                                                    toggleShowGroup(header.iconClass, $(this));
+		                                                })
+											  			.append($headerIcon.clone().addStatusIcon(header.iconClass))
+										      			.append($iconText.clone().append(header.text)
+
+												))
+							);
+
+		let toInject = document.querySelectorAll('img.svg');
+		SVGInjector(toInject);
+
 	});
 
     function dataCard(row, headerMap, id){
@@ -199,8 +224,33 @@
         return card;
     }
 
-    function toggleStatus(status){
+    $.fn.addStatusIcon = function(iconClass) {
+        this.addClass(iconClass).append($('<img>', {'class':'svg','src': chrome.extension.getURL(iconPathByClass(iconClass))}));
+        return this;
+    };
 
-	}
+
+	function iconPathByClass(iconClass){
+    	if(iconClass === 'ticket-group-openIcon'){ return 'svg/issue-opened.svg' }
+        if(iconClass === 'ticket-group-testIcon'){ return 'svg/beaker.svg' 		 }
+        if(iconClass === 'ticket-group-devIcon'){ return 'svg/git-branch.svg' 	 }
+        if(iconClass === 'ticket-group-appIcon'){ return 'svg/eye.svg' 			 }
+        if(iconClass === 'ticket-group-prodIcon'){ return 'svg/issue-closed.svg' }
+        if(iconClass === 'ticket-group-codeIcon'){ return 'svg/code.svg' 		 }
+        return 'svg/note.svg'
+    };
+
+    function toggleShowGroup(iconClass, $elem){
+        $elem.toggleClass('show-tg');
+        $(`div[status-group=${iconClass}]`).toggleClass('show-tg');
+
+        $('[status-group]').not('.show-tg').hide();
+        let shown = $('[status-group].show-tg').show().length;
+
+        let selected = $('.headerItemContainer.show-tg').length;
+        if(shown === 0 && selected === 0){
+            $('[status-group]').show();
+        }
+    }
 
 })(jQuery);
