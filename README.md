@@ -12,3 +12,9 @@ System
 Title
 Ticket Number
 ```
+
+8/31/19
+```
+- added filtering by statis icons in results header
+- added support for local notes (plus sign in header) saved in chormes synced storage
+```
