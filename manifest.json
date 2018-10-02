@@ -7,17 +7,36 @@
       "matches": ["http://aldon01-stp/MRcgi/MRhomepage.pl*"],
       "all_frames": true,
       "run_at": "document_end",
-      "css": ["css/gfld.css", "css/local_issues.css", "css/tooltipster.bundle.min.css","css/tooltipster-sideTip-light.min.css", "css/tooltipster-shadow.css"],
-      "js": [ "js/jquery.js", "js/svn_injector.js", "js/tooltipster.bundle.min.js","js/contentScript.js", "js/local_issues.js"]
+      "css": ["css/gfld.css"
+            , "css/local_issues.css"
+            , "css/tooltipster.bundle.min.css"
+            ,"css/tooltipster-sideTip-light.min.css"
+            , "css/tooltipster-shadow.css"
+            , "css/tags.css"
+      ],
+      "js": [ "js/jquery.js"
+            , "js/svn_injector.js"
+            , "js/tooltipster.bundle.min.js"
+            , "js/item_menu.js"
+            , "js/contentScript.js"
+            , "js/local_issues.js"
+            , "js/tags.js"
+            , "js/search_handler.js"
+      ]
     }
   ],
+  "background": {
+    "scripts": ["js/background.js"],
+    "persistent": false
+  },
   "web_accessible_resources":[
     "svg/*"
   ],
   "permissions": [
     "storage",
     "declarativeContent",
-    "activeTab"
+    "activeTab",
+    "contextMenus"
   ],
   "manifest_version": 2
 }

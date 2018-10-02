@@ -54,8 +54,17 @@
 		let shownGroups = 0;
 
         //handle the rows
+		$('[id^=grid-ct]').attr('style', '');
+        $('[id^=ext-gen]').attr('style', '');
+        $('[class^=x-grid3-row]').attr('style', '');
+        $('[class^=x-grid3-header]').attr('style', '');
+        $('[class^=x-grid3-header]').children().attr('style', '');
 		const $homePage = $('div[id*="homepageGrid"]');
+        $homePage.attr('style', '');
+        //$('#ext-gen12').attr('style', '');
 		$homePage.find('table[class="x-grid3-row-table"] tbody tr').each$((index, $elem) => {
+
+			$elem.attr('style', '');
 
 		    //flag the id, checkbox, and attachments columns to be removed
 			$elem.find('.x-grid3-td-hpColHeading_0id').addClass("req_rm");
@@ -72,14 +81,33 @@
 			if ($status.exists()) {
 				$status.prependTo($elem);
 				openTickets += $status.find(':contains("Open")').empty().addStatusIcon('ticket-group-openIcon').length;
-				testingTickets += $status.find(':contains("Testing")').empty().addClass('ticket-group-testIcon').append($('<img>', {'class':'svg','src': chrome.extension.getURL('svg/beaker.svg')})).length;
-				devTickets += $status.find(':contains("Development")').empty().addClass('ticket-group-devIcon').append($('<img>', {'class':'svg','src': chrome.extension.getURL('svg/git-branch.svg')})).length;
-				approvedTickets += $status.find(':contains("Approvals")').empty().addClass('ticket-group-appIcon').append($('<img>', {'class':'svg','src': chrome.extension.getURL('svg/eye.svg')})).length;
-				productionTickets += $status.find(':contains("Scheduled for Prod")').empty().addClass('ticket-group-prodIcon').append($('<img>', {'class':'svg','src': chrome.extension.getURL('svg/issue-closed.svg')})).length;
-				codeReviewTickets += $status.find(':contains("Code Review")').empty().addClass('ticket-group-codeIcon').append($('<img>', {'class':'svg','src': chrome.extension.getURL('svg/code.svg')})).length;
+				testingTickets += $status.find(':contains("Testing")').empty().addStatusIcon('ticket-group-testIcon').length;
+				devTickets += $status.find(':contains("Development")').empty().addStatusIcon('ticket-group-devIcon').length;
+				approvedTickets += $status.find(':contains("Approvals")').empty().addStatusIcon('ticket-group-appIcon').length;
+				productionTickets += $status.find(':contains("Scheduled for Prod")').empty().addClass("ticket_complete").addStatusIcon('ticket-group-prodIcon').length;
+				codeReviewTickets += $status.find(':contains("Code Review")').empty().addStatusIcon('ticket-group-codeIcon').length;
 			}
 
-			let class_i = $elem.find('[class*=ticket-group]')[0];
+            //set the status icons
+            const $devStatus = $elem.find('.x-grid3-td-hpColHeading_Dev__bStatus');
+			if($devStatus.exists()){
+                if($devStatus.find(':contains("Request for Close")').exists()){
+                    console.log("REQUEST FOR CLOSE");
+                    $status.addClass("ticket_complete");
+                }
+                if($devStatus.find(':contains("Development")').exists()){
+                    console.log("DEVELOPMENT");
+                }
+			}
+
+			const $branch1 = $elem.find('.x-grid3-td-hpColHeading_Branch');
+            const $branch2 = $elem.find('.x-grid3-td-hpColHeading_Branch__b2');
+            if($branch1.find(':contains("https")').exists() || $branch2.find(':contains("https")').exists()){
+            	$status.addClass("ticket_active_branch");
+			}
+
+
+            let class_i = $elem.find('[class*=ticket-group]')[0];
 
 			let group_name = "";
 			for(let v_class of class_i.classList.values()){
@@ -98,6 +126,7 @@
             const $additionalDetailsRow = $('<tr>', {'class': 'displayRow2'});
             $additionalDetailsRow.append($('<td>'));
 
+
             //id we will use with the tooltip
             let cardId = Math.floor(Math.random()*90000) + 10000;
 
@@ -115,6 +144,7 @@
                 const $ticketNumberContent = $ticketNumber.removeAttr('style').children('div:first');
                 const ticketNumber = $ticketNumberContent.text();
                 cardId = ticketNumber;
+                $elem.closest('.x-grid3-row').attr('ticket-row-id', ticketNumber);
 
                 let $titleElements = $title.children('div:first');
                 let $titleText = $titleElements.children('a[href="#"][onclick]');
@@ -140,6 +170,7 @@
 					if (ticketType && ticketType.includes('Ticket')) {
 						$td.append($('<a/>', { 'class': 'noFmt padLeft inline-ticket-link', href: `javascript:goToDetails(${ticketType.match(/\d+/)}, 28);` })
 							.append(`[ ${ticketType} ]`));
+                        $elem.closest('.x-grid3-row').attr('master-ticket-group', ticketType);
 					}
 					$ticketType.addClass("req_rm");
 				}
@@ -206,10 +237,13 @@
 												))
 							);
 
-		let toInject = document.querySelectorAll('img.svg');
-		SVGInjector(toInject);
+		$(this).addTags();
 
+        let toInject = document.querySelectorAll('img.svg');
+        SVGInjector(toInject);
 	});
+
+
 
     function dataCard(row, headerMap, id){
         let card = $('<div>', {id: (id+'card'), class:'tooltip_templates'});
@@ -221,6 +255,7 @@
             let _name = headerMap[this.cellIndex];
             let result =  _name + ": " + _text;
             innercard.append(inner.append(result));
+            $(this).addClass('req_rm');
         });
 
         card.append(innercard);

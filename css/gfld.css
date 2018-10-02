@@ -405,6 +405,7 @@ a [href] {
 
 .x-grid3-row-table{
     border: none !important;
+    width: 100%;
 }
 
 div[id*='homepageGrid'] td[class*='master_checkbox']{
@@ -498,6 +499,7 @@ div[class*="ticket-group"]{
     font-size: var(--details-font-size) !important;
     color: var(--font-light) !important;
     font-family: var(--main-font-family);
+    width:60%;
 }
 
 .displayRow2 td{
@@ -549,4 +551,45 @@ div[class*="ticket-group"]{
 
 .headerItemContainer.show-tg{
     fill: var(--link-color);
+}
+
+.x-grid3-row{
+    position: relative;
+}
+
+.x-grid3-header-offset > table{
+    width: 100%;
+}
+
+svg:hover .header_options.dark{
+    fill: var(--blackish);
+}
+
+.header_options.dark.invis{
+    fill: var(--blackish);
+}
+
+.header_options.dark.invis :hover{
+    fill: var(--blackish);
+}
+.xgrid3-header-iner{
+    position: relative;
+}
+
+#tissue_header{
+    position: absolute;
+    top: 20px;
+    right: 8px;
+}
+
+.x-grid3-scroller{
+    overflow: hidden !important;
+}
+
+.ticket_complete{
+    fill: gray;
+}
+
+.ticket_active_branch{
+    fill: #3BC25D;
 }

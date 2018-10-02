@@ -1,25 +1,41 @@
-/**************************
- * dont edit .js file directly
-***************************/
+
+import {callbackMap} from "./types";
+
 
 interface Issue {
     id: number;
     message: string;
     group?: string;
     color?: string;
+    position?: number;
 }
 
+/*
 interface UserIssues{
     issues: Issue[]
 }
+*/
 
 let local_container;
 
+/*
 let user_issues: UserIssues = {
     issues: Array()
 };
+*/
+
+let local_user_issues: Issue[];
 
 let display_mode: string = "grouped";
+
+let optionCallbacks : callbackMap[] = [
+    {item: 'add', callback: showPrompt},
+    {item: 'remove', callback: removeSelected},
+    {item: 'reset', callback: sortReset},
+    {item: 'group', callback: groupIssues},
+    {item: 'hide', callback: hideIssues},
+    {item: 'show', callback: unhideIssues}
+];
 
 
 
@@ -27,138 +43,34 @@ getIssues();
 
 function addIssue(lid, lmsg, grp?){
     let i: Issue = {id: lid, message: lmsg, group: grp};
+    if(local_user_issues == undefined){
+        console.log('local_user_issues temp');
+        local_user_issues = [i];
+    }else{
+        console.log('local_user_issues not empty');
+        local_user_issues.push(i);
+    }
 
-    user_issues.issues.push(i);
 
-    saveIssues(user_issues);
+
+    saveIssues(local_user_issues);
 }
 
-function saveIssues(issues: UserIssues) {
-    chrome.storage.sync.set({user_definied_issues: issues.issues}, function() {
+function saveIssues(issues: Issue[]) {
+    chrome.storage.sync.set({user_definied_issues: issues}, function() {
         reloadIssues();
     });
 }
 
 function getIssues(){
+
     chrome.storage.sync.get(['user_definied_issues'], function(result) {
-        console.log('Value currently is ');
-        console.log(result);
-        user_issues.issues = result.user_definied_issues;
-        console.log(user_issues);
-        console.log(user_issues.issues);
+        local_user_issues = result.user_definied_issues;
         showIssues();
     })
 }
 
-function addIssueHeader(){
-    let header = document.createElement('div');
-    header.setAttribute('id', 'issue_header');
-
-    let dropdown = document.createElement('div');
-    dropdown.id = 'tipped_dropdown';
-    let img = document.createElement('img');
-    img.setAttribute('class', 'svg header_options');
-    img.setAttribute('src', chrome.extension.getURL('svg/plus.svg'));
-
-    let img2 = document.createElement('img');
-    img2.setAttribute('class', 'svg header_options');
-    img2.setAttribute('src', chrome.extension.getURL('svg/chevron-down.svg'));
-
-
-    SVGInjector(img);
-    SVGInjector(img2);
-
-    let arrow = document.createElement('span');
-    arrow.setAttribute('class', 'dropdown-caret');
-    arrow.setAttribute('style', 'margin-top: 8px;');
-
-    dropdown.appendChild(img);
-    dropdown.appendChild(img2);
-
-    header.appendChild(dropdown);
-    local_container.appendChild(header);
-
-    let issue_menu = document.createElement('div');
-    issue_menu.id = 'issue_menu';
-
-
-    let options = document.createElement('div');
-    options.id = 'issue_dropdown';
-
-    //dropdown.appendChild(issue_menu);
-    dropdown.setAttribute('class', 'tipped headerDropDown');
-    let issue_options: string[] = Array("add", "remove", "group", "reset", "hide", "show");
-    for(let opt of issue_options){
-        let op = document.createElement("div");
-        op.id = 'option_' + opt;
-        op.setAttribute('class', 'header_option');
-        op.innerText = opt;
-        options.appendChild(op);
-    }
-
-    addOptionCallbacks(options);
-
-    issue_menu.appendChild(options);
-
-    let $dropdown = $(dropdown);
-
-    $dropdown.tooltipster({
-        content: $(issue_menu),
-        animation: 'fade',
-        delay: 2,
-        theme: 'tooltipster-shadow',
-        position: 'bottom',
-        trigger: 'click',
-        interactive: true,
-        debug: true
-    });
-
-}
-
-function addOptionCallbacks(options){
-    console.log("adding callbacks for");
-    console.log(options);
-
-    let $items = $(options);
-
-    let $add = $items.find('#option_add');
-    let $remove = $items.find("#option_remove");
-    let $reset = $items.find('#option_reset');
-    let $group = $items.find('#option_group');
-    let $hide = $items.find('#option_hide');
-    let $show = $items.find('#option_show');
-
-    $add.on('click', showPrompt);
-
-    $remove.on('click', removeSelected);
-
-    $reset.on('click', function(){
-        display_mode = "list";
-        sortReset();
-    });
-
-    $group.on('click', function(){
-        display_mode = "grouped";
-        groupIssues();
-    });
-
-    $hide.on('click', function(e){
-        //e.preventDefault();
-        console.log("hide callback");
-        $('#issues_container').hide();
-        $('#tipped_dropdown').tooltipster('close');
-    });
-
-    $show.on('click', function(e){
-        //e.preventDefault();
-        console.log("show callback");
-        $('#issues_container').show();
-        $('#tipped_dropdown').tooltipster('close');
-    });
-}
-
 function removeSelected(){
-    console.log("'remove' option callback");
     $('#tipped_dropdown').tooltipster('close');
 
     var selectedElements = local_container.getElementsByClassName('selected');
@@ -166,19 +78,17 @@ function removeSelected(){
         let _i : Issue = JSON.parse(testElement.getAttribute('data'));
         removeIssue(_i);
     });
-
-    console.log(user_issues);
-    saveIssues(user_issues);
+    saveIssues(local_user_issues);
 }
 
 function removeIssue(issue: Issue){
     let _index : number = NaN;
 
-    user_issues.issues.forEach((item, index) => {
+    local_user_issues.forEach((item, index) => {
         if(issuesEqual(item, issue)){ _index = index;}
     });
 
-    user_issues.issues.splice(_index, 1);
+    local_user_issues.splice(_index, 1);
 }
 
 function issuesEqual(source: Issue, target: Issue) : boolean {
@@ -187,7 +97,6 @@ function issuesEqual(source: Issue, target: Issue) : boolean {
 
 
 function showPrompt(e) {
-    console.log("'show' option callback");
     $('#tipped_dropdown').tooltipster('close');
 
     let container = document.createElement('div');
@@ -240,17 +149,12 @@ function showPrompt(e) {
 }
 
 function submitAdd(tid: string, msg: string){
-    console.log("submitted");
     $(local_container).tooltipster('close');
-    console.log("tid: ", tid);
-    console.log("msg: ", msg);
 
     let _ticket = parseInt(tid);
     if(isNaN(_ticket)){
-        //console.log("is nan");
         addIssue(0, msg, tid);
     }else{
-        //console.log("is number");
         addIssue(_ticket, msg);
     }
 
@@ -258,7 +162,6 @@ function submitAdd(tid: string, msg: string){
 }
 
 function reloadIssues(){
-    console.log("reload issues");
     let elem = document.querySelector('#issues_container');
     elem.parentNode.removeChild(elem);
 
@@ -267,12 +170,13 @@ function reloadIssues(){
 
     local_container.appendChild(issues_container);
 
-    renderIssues(issues_container);
+    if(local_user_issues != undefined){
+        renderIssues(issues_container);
+    }
 }
 
 function renderIssues(issues_container){
-    console.log("render issues");
-    let _issues = user_issues.issues;
+    let _issues = local_user_issues;
 
     for(let issue of _issues){
         let row = document.createElement('div');
@@ -325,30 +229,37 @@ function showIssues(){
 
     local_container.appendChild(issues_container);
 
-    addIssueHeader();
-    console.log("current issues");
+    let menuPrefix = '';
+    let menuTarget = $(local_container);
+    let issue_options: string[] = Array("add", "remove", "group", "reset", "hide", "show");
 
-    renderIssues(issues_container);
+    // @ts-ignore
+    menuTarget.addItemMenu(menuPrefix, issue_options, optionCallbacks);
+
+
+    if(local_user_issues != undefined){
+        renderIssues(issues_container);
+    }
+
 
     document.body.appendChild(local_container);
 
     let mySVGsToInject = document.querySelectorAll('img.svg');
 
-    // Do the injection
+    // @ts-ignore
     SVGInjector(mySVGsToInject);
 
     sortReset();
-
 }
 
 function sortReset(){
-    console.log("list reset");
     $('#tipped_dropdown').tooltipster('close');
     let $issues_container = $('#issues_container');
     let $issues_row = $('.issue_row');
 
     $('.group_header').hide();
     $('.grouped').removeClass('grouped');
+
 
     // @ts-ignore
     let sorted = $issues_row.sort(function(a,b){
@@ -358,17 +269,23 @@ function sortReset(){
         return r;
     });
 
-    console.log(sorted);
-
     $issues_container.html(sorted);
-
-
 
     if(display_mode === "grouped"){groupIssues();}
 }
 
+function hideIssues(){
+    $('#issues_container').hide();
+    $('#tipped_dropdown').tooltipster('close');
+}
+
+function unhideIssues(){
+    $('#issues_container').show();
+    $('#tipped_dropdown').tooltipster('close');
+}
+
 function groupIssues(){
-    console.log("grouping");
+    display_mode = "grouped";
     $('#tipped_dropdown').tooltipster('close');
     let $issues_container = $('#issues_container');
     let $issues_row = $('.issue_row');
